@@ -1,0 +1,47 @@
+(som) bash-3.2$ python small_data_classifier.py data.csv --outcome outcome
+================================================================
+DATA SUMMARY
+================================================================
+  Experiments (rows):     100
+  Factors (columns):      10  (7 numeric, 3 categorical)
+  Outcome balance:        {'no': 50, 'yes': 50}
+  Samples per factor:     10.0
+
+REGIME CHECK
+  [ok] 10.0 samples/factor is workable for simple models.
+
+================================================================
+MODEL PERFORMANCE  (5-fold stratified CV)
+================================================================
+  model                 ROC-AUC             balanced acc      
+  --------------------------------------------------------
+  logistic_regression   0.754 +/- 0.111     0.720
+  random_forest         0.874 +/- 0.072     0.770
+  gradient_boosting     0.914 +/- 0.016     0.830
+  baseline_majority     0.500 +/- 0.000     0.500
+
+================================================================
+FACTOR IMPORTANCE  (permutation, higher = more signal)
+================================================================
+  temperature_C         +0.230 +/- 0.042  #######################
+  pH                    +0.076 +/- 0.016  #######
+  substrate_mM          +0.008 +/- 0.002  
+  time_min              +0.006 +/- 0.001  
+  salt_mM               +0.006 +/- 0.003  
+  enzyme_conc_mgml      +0.006 +/- 0.002  
+  agitation_rpm         +0.005 +/- 0.002  
+  additive              +0.003 +/- 0.001  
+  operator              +0.003 +/- 0.002  
+  buffer_type           +0.002 +/- 0.001  
+
+================================================================
+VERDICT
+================================================================
+  Signal is clearly present. Best model: gradient_boosting (AUC 0.914).
+  -> A working classifier is achievable. Focus on the top
+     factors above and collect a few more points to firm it up.
+
+  Reminder: with ~100 points, a single AUC number is noisy. Trust
+  the cross-validated mean and its +/- spread, not one lucky split.
+================================================================
+(som) bash-3.2$ 
